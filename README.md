@@ -23,4 +23,4 @@ Este é um sistema interativo desenvolvido para o evento da **Frutap**, onde os 
 ## 🎮 **Como Rodar o Projeto**
 1. Clone este repositório:
    ```sh
-   git clone https://github.com/seuusuario/frutap-evento.git
+   https://github.com/silvatet/Frutap-quiz.git
