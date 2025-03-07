@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa o useNavigate para redirecionamento
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import "./Perguntas.css";
 
@@ -30,55 +30,58 @@ const Quiz = () => {
   const [indice, setIndice] = useState(0);
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
   const [correcao, setCorrecao] = useState(null);
-  const navigate = useNavigate(); // Para redirecionamento
+  const navigate = useNavigate();
 
   const handleResposta = (index) => {
     setRespostaSelecionada(index);
-
     if (index === perguntas[indice].correta) {
       setCorrecao("correto");
     } else {
       setCorrecao("errado");
     }
+  };
 
-    setTimeout(() => {
-      if (indice < perguntas.length - 1) {
-        setIndice(indice + 1);
-        setRespostaSelecionada(null);
-        setCorrecao(null);
-      } else {
-        navigate("/final"); // Redireciona para a tela final após a última pergunta
-      }
-    }, 2000);
+  const proximaPergunta = () => {
+    if (indice < perguntas.length - 1) {
+      setIndice(indice + 1);
+      setRespostaSelecionada(null);
+      setCorrecao(null);
+    } else {
+      navigate("/final");
+    }
   };
 
   return (
     <Box className="quiz-container">
-      <Typography variant="h4" className="pergunta">
-        {perguntas[indice].pergunta}
-      </Typography>
+      {/* Bloco da pergunta */}
+      <Box className="pergunta-bloco">
+        <Typography variant="h5" className="pergunta-texto">
+          {perguntas[indice].pergunta}
+        </Typography>
+      </Box>
+
+      {/* Opções de resposta */}
       {perguntas[indice].respostas.map((resposta, index) => (
         <Button
           key={index}
-          className={`resposta ${
-            respostaSelecionada !== null
-              ? index === perguntas[indice].correta
-                ? "correto"
-                : index === respostaSelecionada
-                ? "errado"
-                : ""
-              : ""
-          }`}
+          className={`resposta ${respostaSelecionada !== null ? (index === perguntas[indice].correta ? "correto" : index === respostaSelecionada ? "errado" : "") : ""}`}
           onClick={() => handleResposta(index)}
           disabled={respostaSelecionada !== null}
         >
-          {resposta}
+          <span className="letra">{String.fromCharCode(65 + index)}</span> {resposta}
+          {respostaSelecionada !== null && index === perguntas[indice].correta && <span className="icone-correto">✔</span>}
+          {respostaSelecionada !== null && index === respostaSelecionada && index !== perguntas[indice].correta && <span className="icone-errado">✖</span>}
         </Button>
       ))}
+
+      {/* Feedback de acerto/erro */}
       {correcao && (
-        <Typography className="feedback">
-          {correcao === "correto" ? "Parabéns, você acertou!" : "Você errou!"}
-        </Typography>
+        <Box className="feedback-container">
+          <Typography className={`feedback ${correcao}`}>{correcao === "correto" ? "✔ CORRETO!" : "✖ VOCÊ ERROU!"}</Typography>
+          <Button className="botao-proximo" onClick={proximaPergunta}>
+            PRÓXIMO
+          </Button>
+        </Box>
       )}
     </Box>
   );

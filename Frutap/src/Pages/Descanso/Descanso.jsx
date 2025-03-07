@@ -7,14 +7,7 @@ import "./Descanso.css";
 const TelaDescanso = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      navigate("/cadastro"); // Redireciona automaticamente após 10 segundos
-    }, 10000);
-
-    return () => clearTimeout(timeout);
-  }, [navigate]);
-
+ 
   return (
     <Box
       className="tela-container"

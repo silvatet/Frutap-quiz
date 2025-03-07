@@ -5,52 +5,26 @@
     font-style: normal;
 }
 
-/* Container principal da tela final */
+/* Container principal */
 .tela-final-container {
-    width: 100vw;
-    height: 100vh;
+    width: 1080px;
+    height: 1920px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: url("../../assets/tela-4.jpg") no-repeat center center;
+    background-size: cover;
     text-align: center;
-    background-color: black;
-    font-family: 'Monday';
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
-/* Logo centralizado */
-.logo-final {
-    width: 50%;
-    max-width: 500px;
-    object-fit: contain;
-}
-
-/* Mensagem final */
-.mensagem-final {
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-/* Ajuste para telas Full HD em vertical (TV Touch de 43") */
+/* Ajuste para telas Full HD verticais */
 @media (min-width: 1080px) and (min-height: 1920px) {
-    .mensagem-final {
-        font-size: 4rem;
-    }
-    .logo-final {
-        width: 60%;
-        max-width: 600px;
-    }
-}
-
-/* Ajuste para telas Ultra HD grandes */
-@media (min-width: 2000px) {
-    .mensagem-final {
-        font-size: 5rem;
-    }
-    .logo-final {
-        width: 40%;
-        max-width: 700px;
+    .tela-final-container {
+        width: 1080px;
+        height: 1920px;
     }
 }

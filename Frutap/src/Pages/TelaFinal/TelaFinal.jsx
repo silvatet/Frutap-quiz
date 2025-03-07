@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import "./TelaFinal.css";
 
 const TelaFinal = () => {
@@ -11,17 +11,10 @@ const TelaFinal = () => {
       navigate("/"); // Volta para a tela de descanso após 10 segundos
     }, 10000);
 
-    return () => clearTimeout(timeout); // Limpa o timeout ao desmontar
+    return () => clearTimeout(timeout);
   }, [navigate]);
 
-  return (
-    <Box className="tela-final-container">
-      <img src="../../public/logo.png" alt="Logo" className="logo-final" />
-      <Typography variant="h2" className="mensagem-final">
-        Retire seu brinde no balcão
-      </Typography>
-    </Box>
-  );
+  return <Box className="tela-final-container"></Box>; // Apenas o fundo sem mensagem
 };
 
 export default TelaFinal;

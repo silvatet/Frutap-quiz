@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import * as XLSX from "xlsx";
@@ -38,11 +38,11 @@ const TelaCadastro = () => {
 
   const formatCPF = (value) => {
     return value
-      .replace(/\D/g, "") // Remove caracteres não numéricos
+      .replace(/\D/g, "")
       .replace(/(\d{3})(\d)/, "$1-$2")
       .replace(/(\d{3})(\d)/, "$1-$2")
       .replace(/(\d{3})(\d{2})$/, "$1-$2")
-      .slice(0, 14); // Garante o formato XXX-XXX-XXX-XX
+      .slice(0, 14);
   };
 
   const handleKeyPress = (button) => {
@@ -54,20 +54,16 @@ const TelaCadastro = () => {
     } else if (button === "{space}") {
       if (inputFocado === "nome") setNome((prev) => prev + " ");
     } else if (button === "{enter}") {
-      handleSubmit(); // Enter agora salva e redireciona
+      handleSubmit();
     } else {
       if (inputFocado === "nome") setNome((prev) => prev + button);
       else setCpf((prev) => formatCPF(cpf + button));
     }
   };
 
-  const validarNome = (nome) => {
-    return nome.trim().split(" ").length >= 3;
-  };
-
   const handleSubmit = () => {
-    if (!validarNome(nome) || !cpf.match(/^\d{3}-\d{3}-\d{3}-\d{2}$/)) {
-      alert("Por favor, insira um nome completo válido e um CPF no formato XXX-XXX-XXX-XX.");
+    if (!nome.trim() || !cpf.match(/^\d{3}-\d{3}-\d{3}-\d{2}$/)) {
+      alert("Por favor, insira um nome válido e um CPF no formato XXX-XXX-XXX-XX.");
       return;
     }
 
@@ -112,7 +108,11 @@ const TelaCadastro = () => {
 
   return (
     <Box className="cadastro-container">
-      <h1>Cadastro</h1>
+      <Typography variant="h4" className="mensagem">
+        DIGITE O SEU NOME E CPF
+      </Typography>
+
+      {/* Campo Nome com Texto Branco e suporte ao teclado virtual */}
       <TextField
         label="Nome"
         value={nome}
@@ -120,7 +120,12 @@ const TelaCadastro = () => {
         onFocus={() => setInputFocado("nome")}
         fullWidth
         className="input-field"
+        InputProps={{
+          style: { color: "white" }, // TEXTO DIGITADO FICA BRANCO
+        }}
       />
+
+      {/* Campo CPF com Texto Branco e suporte ao teclado virtual */}
       <TextField
         label="CPF"
         value={cpf}
@@ -128,11 +133,20 @@ const TelaCadastro = () => {
         onFocus={() => setInputFocado("cpf")}
         fullWidth
         className="input-field"
+        InputProps={{
+          style: { color: "white" }, // TEXTO DIGITADO FICA BRANCO
+        }}
       />
+
+      <Button variant="contained" color="primary" onClick={handleSubmit} className="botao-salvar">
+        SALVAR
+      </Button>
+
+      {/* Teclado Virtual corrigido */}
       <Box className="keyboard-container">
         <Keyboard
           layoutName={layoutName}
-          onKeyPress={handleKeyPress}
+          onKeyPress={(button) => handleKeyPress(button)}
           className="teclado-virtual"
           display={{
             "{bksp}": "←",
@@ -143,9 +157,6 @@ const TelaCadastro = () => {
           }}
         />
       </Box>
-      <Button variant="contained" color="primary" onClick={handleSubmit} className="botao-salvar">
-        Salvar
-      </Button>
     </Box>
   );
 };
