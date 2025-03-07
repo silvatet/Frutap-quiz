@@ -1,43 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
+import telaFundo from "../../assets/tela-1.jpg"; // Importa a imagem corretamente
 import "./Descanso.css";
 
 const TelaDescanso = () => {
-  const [ativo, setAtivo] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timeout = setTimeout(() => setAtivo(false), 10000);
+    const timeout = setTimeout(() => {
+      navigate("/cadastro"); // Redireciona automaticamente após 10 segundos
+    }, 10000);
 
-    const resetTimer = () => {
-      clearTimeout(timeout);
-      setAtivo(true);
-      setTimeout(() => setAtivo(false), 10000);
-    };
-
-    window.addEventListener("mousemove", resetTimer);
-    window.addEventListener("keydown", resetTimer);
-    window.addEventListener("touchstart", resetTimer);
-
-    return () => {
-      window.removeEventListener("mousemove", resetTimer);
-      window.removeEventListener("keydown", resetTimer);
-      window.removeEventListener("touchstart", resetTimer);
-      clearTimeout(timeout);
-    };
-  }, []);
-
-  // Função para redirecionar ao clicar na tela de descanso
-  const handleScreenClick = () => {
-    navigate("/cadastro");
-  };
+    return () => clearTimeout(timeout);
+  }, [navigate]);
 
   return (
-    <Box className="tela-container" onClick={handleScreenClick}>
-      <Box className="tela-descanso">
-        <img src="/logo.png" alt="Logo" className="logo" />
-      </Box>
+    <Box
+      className="tela-container"
+      onClick={() => navigate("/cadastro")} // Redireciona ao clicar na tela
+    >
+      <img src={telaFundo} alt="Tela de Descanso" className="tela-fundo" />
     </Box>
   );
 };

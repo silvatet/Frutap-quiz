@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import TelaDescanso from "./Pages/Descanso/Descanso";
 import TelaCadastro from "./Pages/Cadastro/Cadastro";
 import Quiz from "./Pages/Perguntas/Perguntas";
-import TelaFinal from "./Pages/TelaFinal/TelaFinal";
+import TelaFinal from "./Pages/TelaFinal/TelaFinal";  // Importando a tela final
 
 
 function App() {
